@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #cccccc;
+  height: 64px;
+}
+
+p {
+  padding-top: 8px;
+}
+
+.constructor {
+  width: fit-content;
+  margin: 16px 64px;
+  border: 3px solid #cccccc;
+  border-radius: 8px;
+}
+
+.btn-create {
+  padding: 4px;
+  margin: 4px;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -5,6 +5,7 @@
 
 a {
   text-decoration: none;
+  color: black;
 }
 a:hover, a:active, a:visited {
   color: black;
@@ -27,6 +28,7 @@ a:hover, a:active, a:visited {
   margin-right: 64px;
   height: 40px;
   width: 150px;
+  cursor: pointer;
 }
 
 .products {
