@@ -77,7 +77,7 @@ class Cart{
             this.cartItemList.push(newCartItem);
 
         }
-
+        this.refreshTotalPrice();
     }
     _addCartButtonHandler(){
         document.querySelector('.cart__btn').addEventListener('click', () => {
@@ -97,6 +97,12 @@ class Cart{
     }
     _product2CartItem(productItem){
         return new CartItem(productItem);
+    }
+    refreshTotalPrice(){
+        document.querySelector('.cart__total-price_span').textContent = this._calculateTotalPrice();
+    }
+    _calculateTotalPrice(){
+        return this.cartItemList.reduce((acc, el) => acc + el.price*el.quantity, 0);
     }
 
 }
@@ -127,6 +133,7 @@ class CartItem{
             cart.cartItemList.splice(cart.cartItemList.findIndex(el => el === this));
             document.querySelector(container).removeChild(el);
         }
+        cart.refreshTotalPrice();
     }
 
     addDelBtnHandler(cart, container){
