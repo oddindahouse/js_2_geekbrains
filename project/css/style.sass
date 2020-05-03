@@ -17,11 +17,47 @@ a
   &-brand
     font-size: 32px
     margin-left: 32px
-.btn-cart
-  margin-right: 64px
-  height: 40px
-  width: 150px
-  cursor: pointer
+.cart
+  position: relative
+  &__btn
+    margin-right: 64px
+    height: 40px
+    width: 150px
+    cursor: pointer
+  &__drop
+    position: absolute
+    z-index: 3
+    right: 32px
+    width: 350px
+    visibility: hidden
+    border: 1px solid #000
+    border-radius: 10px
+    padding: 8px
+    background-color: #fff
+  &__item-list
+    list-style-type: none
+  &__item
+    display: flex
+    flex-flow: row nowrap
+    justify-content: space-between
+    align-items: center
+    height: 64px
+    width: 100%
+    padding: 2px 0
+    border-bottom: 1px solid #cccccc
+    &-img, &-title, &-price, &-delbtn, &-quantity
+      padding: 0 8px
+    &-title, &-price
+      width: 80px
+    &-quantity
+      width: 20px
+    &-delbtn
+      cursor: pointer
+      &:hover
+        color: #f16d7f
+
+
+
 .products
   display: flex
   flex-flow: row wrap
@@ -62,3 +98,4 @@ a
 
 .buy-btn:focus
   outline: none
+.btn-cart__drop
