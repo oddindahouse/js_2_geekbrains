@@ -130,7 +130,7 @@ class CartItem{
             this.quantity--;
             el.querySelector('.cart__item-quantity').textContent = this.quantity;
         } else{
-            cart.cartItemList.splice(cart.cartItemList.findIndex(el => el === this));
+            cart.cartItemList.splice(cart.cartItemList.findIndex(el => el === this),1);
             document.querySelector(container).removeChild(el);
         }
         cart.refreshTotalPrice();
