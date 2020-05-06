@@ -1,4 +1,5 @@
 'use strict';
+
 class ProductList {
     constructor(cart, container = '.products') {
         this.cart = cart;
@@ -7,7 +8,7 @@ class ProductList {
         this.allProducts = [];
         this._fetchProducts();
         this._render();
-
+        console.log(this._calculateTotalProductsSum())
     }
 
     _fetchProducts() {
@@ -29,7 +30,9 @@ class ProductList {
             productObject.addToCartButtonHandler(this.cart);
         }
     }
-
+    _calculateTotalProductsSum() {
+        return this.allProducts.reduce((acc, el) => acc + el.price, 0);
+    }
 }
 
 class ProductItem {
@@ -50,28 +53,32 @@ class ProductItem {
                 </div>
             </div>`;
     }
-    addToCartButtonHandler(cart){
-        let _handler = () => {cart.addItem(this)}
+
+    addToCartButtonHandler(cart) {
+        let _handler = () => {
+            cart.addItem(this)
+        }
         document.querySelector(`.product-item[data-id="${this.id}"]`).querySelector('.buy-btn')
-            .addEventListener('click', _handler.bind(this) );
+            .addEventListener('click', _handler.bind(this));
     }
 }
 
-class Cart{
+class Cart {
     constructor(container = '.cart__item-list') {
         this.container = container;
         this.cartItemList = [];
         this._addCartButtonHandler();
 
     }
-    addItem(productItem){
+
+    addItem(productItem) {
         let el = this.cartItemList.find(el => el.id === productItem.id);
         if (el !== undefined) {
             el.quantity++;
             document.querySelector(`.cart__item[data-id="${el.id}"] .cart__item-quantity`).textContent = el.quantity;
 
         } else {
-            let newCartItem =  this._product2CartItem(productItem);
+            let newCartItem = this._product2CartItem(productItem);
             document.querySelector(this.container).insertAdjacentHTML('beforeend', newCartItem.render());
             newCartItem.addDelBtnHandler(this, this.container);
             this.cartItemList.push(newCartItem);
@@ -79,35 +86,38 @@ class Cart{
         }
         this.refreshTotalPrice();
     }
-    _addCartButtonHandler(){
+
+    _addCartButtonHandler() {
         document.querySelector('.cart__btn').addEventListener('click', () => {
             let isVisible = (vElement) => {
                 return !(vElement.offsetWidth == 0 && vElement.offsetHeight == 0)
                     && window.getComputedStyle(vElement).visibility != "hidden";
             }
 
-            if (isVisible(document.querySelector('.cart__drop'))){
+            if (isVisible(document.querySelector('.cart__drop'))) {
                 document.querySelector('.cart__drop').style.visibility = 'hidden';
-            } else
-            {
+            } else {
                 document.querySelector('.cart__drop').style.visibility = 'visible';
             }
 
         })
     }
-    _product2CartItem(productItem){
+
+    _product2CartItem(productItem) {
         return new CartItem(productItem);
     }
-    refreshTotalPrice(){
+
+    refreshTotalPrice() {
         document.querySelector('.cart__total-price_span').textContent = this._calculateTotalPrice();
     }
-    _calculateTotalPrice(){
-        return this.cartItemList.reduce((acc, el) => acc + el.price*el.quantity, 0);
+
+    _calculateTotalPrice() {
+        return this.cartItemList.reduce((acc, el) => acc + el.price * el.quantity, 0);
     }
 
 }
 
-class CartItem{
+class CartItem {
     constructor(product, img = 'https://placehold.it/60x60') {
         this.title = product.title;
         this.price = product.price;
@@ -115,6 +125,7 @@ class CartItem{
         this.img = img;
         this.quantity = 1;
     }
+
     render() {
         return `<li class="cart__item" data-id="${this.id}">
                 <img class="cart__item-img" src="${this.img}" alt="Some img">
@@ -124,23 +135,25 @@ class CartItem{
                     <i class="fas fa-times-circle cart__item-delbtn"></i>
             </li>`;
     }
-    _changeQuantity(cart, container){
+
+    _changeQuantity(cart, container) {
         let el = document.querySelector(`.cart__item[data-id="${this.id}"]`)
-        if (this.quantity > 1){
+        if (this.quantity > 1) {
             this.quantity--;
             el.querySelector('.cart__item-quantity').textContent = this.quantity;
-        } else{
-            cart.cartItemList.splice(cart.cartItemList.findIndex(el => el === this),1);
+        } else {
+            cart.cartItemList.splice(cart.cartItemList.findIndex(el => el === this), 1);
             document.querySelector(container).removeChild(el);
         }
         cart.refreshTotalPrice();
     }
 
-    addDelBtnHandler(cart, container){
+    addDelBtnHandler(cart, container) {
         document.querySelector(`.cart__item[data-id="${this.id}"] .cart__item-delbtn`)
-            .addEventListener('click',this._changeQuantity.bind(this, cart, container));
+            .addEventListener('click', this._changeQuantity.bind(this, cart, container));
     }
 }
+
 const cart = new Cart();
 new ProductList(cart);
 
