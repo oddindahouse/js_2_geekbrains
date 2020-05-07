@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Burger</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <script defer src="js/app.js"></script>
+</head>
+<body>
+    <header></header>
+    <main>
+
+        <div class="constructor">
+            <p>Выберете размер бургера:</p>
+
+            <div>
+                <input  type="radio" id="big" name="size" value="big"
+                       checked>
+                <label for="big">Большой</label>
+            </div>
+
+            <div>
+                <input  type="radio" id="small" name="size" value="small">
+                <label for="small">Малый</label>
+            </div>
+
+            <p>Выберете начинку:</p>
+
+            <div>
+                <input  type="radio" id="cheese" name="filling" value="cheese"
+                       checked>
+                <label for="cheese">Сыр</label>
+            </div>
+
+            <div>
+                <input  type="radio" id="salad" name="filling" value="salad">
+                <label for="salad">Салат</label>
+            </div>
+
+            <div>
+                <input  type="radio" id="potato" name="filling" value="potato">
+                <label for="potato">Картофель</label>
+            </div>
+            <p>Выберете топпинг:</p>
+            <div>
+                <input type="checkbox" id="flavoring" name="flavoring"
+                       >
+                <label for="flavoring">Припава</label>
+            </div>
+
+            <div>
+                <input type="checkbox" id="maionese" name="maionese">
+                <label for="maionese">Майонез</label>
+            </div>
+            <button class="btn-create">Создать Бургер</button>
+        </div>
+        <div class="status"></div>
+    </main>
+</body>
+</html>
