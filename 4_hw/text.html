@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .form {
+            display: flex;
+            flex-flow: column;
+
+            width: 200px
+        }
+
+        label {
+            margin-left: 8px;
+        }
+
+        input {
+            margin: 8px !important;
+        }
+
+        button[type="submit"] {
+            width: fit-content;
+            padding: 8px;
+            margin: 8px auto;
+        }
+
+        .incorrect {
+            color: red !important;
+            outline: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+<form class="form" action="#">
+    <label for="form__name">Имя:</label>
+    <input type="text" id="form__name">
+    <label for="form__tel">Телефон:</label>
+    <input type="tel" id="form__tel">
+    <label for="form__email">E-mail:</label>
+    <input type="email" id="form__email">
+    <label for="form__text">Текст:</label>
+    <input type="text" id="form__text">
+    <input type="submit" class="form__submit">
+</form>
+
+<script>
+    'use strict';
+    let text = `One: 'Hi Mary.' Two: 'Oh, hi.'
+One: 'How are you doing?'
+Two: 'I'm doing alright. How about you?'
+One: 'Not too bad. The weather is great isn't it?'
+Two: 'Yes. It's absolutely beautiful today.'
+One: 'I wish it was like this more frequently.'
+Two: 'Me too.'
+One: 'So where are you going now?'
+Two: 'I'm going to meet a friend of mine at the department store'
+One: 'Going to do a little shopping?'
+Two: 'Yeah, I have to buy some presents for my parents.'
+One: 'What's the occasion?'
+Two: 'It's their anniversary.'
+One: 'That's great. Well, you better get going. You don't want to be late.'
+Two: 'I'll see you next time.'
+One: 'Sure.' Bye.'`;
+
+    console.log(text.replace(/'/gm, '"'));
+
+    console.log(text.replace(/\B[']/gm, '"'));
+
+    window.addEventListener('load', () => {
+        document.querySelector('.form__submit').addEventListener('click', e => {
+            e.preventDefault();
+            let _getField = (id) => {
+                //console.log(document.querySelector(`#${id}`).value);
+                return document.querySelector(`#${id}`).value;
+
+            }
+            let _addIncorrectClass = (id) => {
+                document.querySelector(`#${id}`).classList.add('incorrect');
+            }
+
+            let name = _getField('form__name');
+            let tel = _getField('form__tel');
+            let email = _getField('form__email');
+            let nameREgExp = /[^a-zа-яё\s]+/gi; // первый не пробел, не содержит небуквы
+            if (nameREgExp.test(name) || name.trim().length === 0) {
+                _addIncorrectClass('form__name');
+            }
+            let telRegExp = /^\+7\(\d{3}[)]\d{3}[-]\d{4}$/gi;
+            if ( !(telRegExp.test(tel) )) {
+                _addIncorrectClass('form__tel');
+            }
+            let mailRegExp = /^[a-z0-9]+([.][a-z0-9]+|[-][a-z0-9]+)*@[a-z0-9]+[.][a-z0-9]{2,3}$/gi;
+            if ( !(mailRegExp.test(email)) ) {
+                _addIncorrectClass('form__email');
+            }
+        });
+
+        [...document.querySelectorAll('input:not([type="submit"])')].forEach(el => {
+            el.addEventListener('focus', () => {
+                el.classList.remove('incorrect');
+            })
+        })
+    })
+</script>
+</body>
+</html>
