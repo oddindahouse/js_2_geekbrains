@@ -1,10 +1,12 @@
 *
   margin: 0
   padding: 0
+
 a
   text-decoration: none
   color: black
-  &:hover,&:active,&:visited
+
+  &:hover, &:active, &:visited
     color: black
 
 .navbar
@@ -14,28 +16,95 @@ a
   display: flex
   justify-content: space-between
   align-items: center
+
   &-brand
     font-size: 32px
     margin-left: 32px
+  &__right
+    display: flex
+    align-items: center
+    justify-content: flex-end
+.btn-search
+  background-color: transparent
+  border: none
+  color: #fafafa
+  font-size: 1.2em
+  position: absolute
+  bottom: 5px
+  right: 0
+  &:focus
+    outline: none
+  &:active
+    color: black
+
+.search__form
+  position: relative
+  //margin-right: 50px
+  display: inline-block
+
+.search__field:focus
+  outline: none
+
+.search__field
+  box-sizing: border-box
+  line-height: 0px
+  font-size: 16px
+  font-weight: bold
+  letter-spacing: 2px
+  width: 200px
+  color: #000
+  padding: 10px 20px 7px 10px
+  background-color: transparent
+  border: none
+  border-bottom: 2px solid #fafafa
+
+.btn
+  background-color: #f16d7f
+  padding: 10px 20px
+  border: 1px solid transparent
+  color: #2f2a2d
+  border-radius: 5px
+  transition: all ease-in-out .4s
+  cursor: pointer
+  text-align: center
+
+  &:hover
+    background-color: transparent
+    border-color: #fafafa
+    color: #fafafa
+
 .cart
   position: relative
   &__btn
-    margin-right: 64px
-    height: 40px
-    width: 150px
+    background-color: #fafafa
+    width: 50px
+    padding: 10px 20px
+    border: 1px solid transparent
+    border-radius: 5px
+    transition: all ease-in-out .4s
     cursor: pointer
+    margin: 0 64px auto
+    text-align: center
+
+    &:hover
+      background-color: transparent
+      border-color: #fafafa
+      color: #fafafa
+
   &__drop
+    display: block
     position: absolute
     z-index: 3
     right: 32px
-    width: 350px
-    visibility: hidden
+    width: fit-content
     border: 1px solid #000
     border-radius: 10px
     padding: 8px
     background-color: #fff
+
   &__item-list
     list-style-type: none
+
   &__item
     display: flex
     flex-flow: row nowrap
@@ -45,16 +114,22 @@ a
     width: 100%
     padding: 2px 0
     border-bottom: 1px solid #cccccc
+
     &-img, &-title, &-price, &-delbtn, &-quantity
       padding: 0 8px
+
     &-title, &-price
       width: 80px
+
     &-quantity
       width: 20px
+
     &-delbtn
       cursor: pointer
+
       &:hover
         color: #f16d7f
+
   &__total-price
     text-align: right
     padding: 8px 16px
@@ -76,27 +151,25 @@ a
   border-bottom-right-radius: 10px
   padding-bottom: 8px
   margin: 8px 8px
+
 .desc
   display: flex
   flex-flow: column nowrap
   align-items: center
+  justify-content: space-around
+
 .product-item:hover
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.16)
 
 .buy-btn
-  font-size: 12px
-  line-height: 36px
+  font-size: 18px
   text-align: center
-  margin: 0 calc(50% - 80px)
-  height: 38px
-  padding-right: 12px
-  padding-left: 19px
-  color: #fff !important
-  display: inline-block
-  background-color: #f16d7f
-  border-radius: 4px
+  color: #fff
   cursor: pointer
-
+  &:hover
+    color: #f16d7f
+    border-color: #f16d7f
 .buy-btn:focus
   outline: none
+
 .btn-cart__drop
