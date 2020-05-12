@@ -4,12 +4,13 @@ const app = new Vue({
     el: '#app',
     data: {
         isCartVisible: false,
-        catalogUrl: '/catalogData.json2',
+        catalogUrl: '/catalogData.json',
         cartUrl: '/getBasket.json',
         products: [],
         filteredProducts: [],
         cartProducts: [],
         cartAmount: 0,
+        cartCountGoods: 0,
         imgCatalog: 'https://placehold.it/200x150',
         imgCart: 'https://placehold.it/60x60',
         searchLine: '',
@@ -68,7 +69,7 @@ const app = new Vue({
             });
         this.getJson(`${API + this.cartUrl}`)
             .then(data => {
-
+                this.cartCountGoods = data.countGoods;
                 this.cartAmount = data.amount;
                 for (let el of data.contents) {
                     this.cartProducts.push(el);
