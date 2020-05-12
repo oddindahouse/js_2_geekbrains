@@ -4,7 +4,7 @@ const app = new Vue({
     el: '#app',
     data: {
         isCartVisible: false,
-        catalogUrl: '/catalogData.json',
+        catalogUrl: '/catalogData.json2',
         cartUrl: '/getBasket.json',
         products: [],
         filteredProducts: [],
@@ -37,13 +37,13 @@ const app = new Vue({
         log() {
             console.log('click');
         },
-
-
-    },
-    computed: {
         decreaseQuantity(event) {
             console.log(event);
         }
+
+    },
+    computed: {
+
     },
 
     beforeMount() {
@@ -63,6 +63,8 @@ const app = new Vue({
                     el.product_name.includes(this.searchLine)
                 );
                 // console.log(`mounted getJson: ${this.filteredProducts}`);
+            }).catch(error => {console.dir(error);
+                this.products = [];
             });
         this.getJson(`${API + this.cartUrl}`)
             .then(data => {
