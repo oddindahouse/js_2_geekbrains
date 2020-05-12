@@ -7,6 +7,7 @@ const app = new Vue({
         catalogUrl: '/catalogData.json',
         cartUrl: '/getBasket.json',
         products: [],
+        filteredProducts: [],
         cartProducts: [],
         cartAmount: 0,
         imgCatalog: 'https://placehold.it/200x150',
@@ -16,10 +17,10 @@ const app = new Vue({
     methods: {
         filterGoods() {
             console.log('filter');
-            let filtered = this.products.filter(el =>
+            this.filteredProducts = this.products.filter(el =>
                 el.product_name.includes(this.searchLine)
             );
-            console.dir(filtered);
+            // console.dir(this.filteredProducts);
         },
         getJson(url) {
             return fetch(url)
@@ -56,7 +57,12 @@ const app = new Vue({
                 for (let el of data) {
                     // console.log(el);
                     this.products.push(el);
+                    // console.log(`mounted getJson: ${el}`);
                 }
+                this.filteredProducts = this.products.filter(el =>
+                    el.product_name.includes(this.searchLine)
+                );
+                // console.log(`mounted getJson: ${this.filteredProducts}`);
             });
         this.getJson(`${API + this.cartUrl}`)
             .then(data => {
