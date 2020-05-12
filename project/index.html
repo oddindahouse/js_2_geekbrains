@@ -15,13 +15,14 @@
             <a class="navbar-brand" href="#">Интернет-магазин</a>
             <div class="navbar__right">
                 <form action="#" class="search__form">
-                    <input type="text" class="search__field" v-model="searchLine">
+                    <input type="text" class="search__field" v-model.trim="searchLine" @blur="filterGoods">
                     <button class="btn-search" type="submit">
                         <i class="fas fa-search" @click="filterGoods"></i>
                     </button>
                 </form>
                 <div class="cart">
                     <div class="cart__btn btn" @click="isCartVisible = !isCartVisible" >
+                        <div v-if="cartCountGoods > 0" class="cart__goods-amount">{{cartCountGoods}}</div>
                         <i class="fas fa-shopping-cart fa-2x"></i>
                     </div>
                     <div class="cart__drop" v-if="isCartVisible">
@@ -48,7 +49,7 @@
     </header>
     <main>
         <div class="products">
-            <div v-if="products.length > 0" class="product-item" v-for="product of products" :key="product.id_product">
+            <div v-if="products.length > 0" class="product-item" v-for="product of filteredProducts" :key="product.id_product">
                 <img :src="imgCatalog" alt="Some img">
                 <div class="desc">
                     <h3>{{product.product_name}}</h3>
@@ -56,7 +57,7 @@
                     <button class="buy-btn btn" @click="addProduct(product)">Купить</button>
                 </div>
             </div>
-            <div v-else>Нет данных</div>
+            <div v-if="products.length === 0">Нет данных</div>
         </div>
     </main>
 </div>
