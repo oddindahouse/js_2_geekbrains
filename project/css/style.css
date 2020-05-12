@@ -97,11 +97,25 @@ a:hover, a:active, a:visited {
   cursor: pointer;
   margin: 0 64px auto;
   text-align: center;
+  position: relative;
 }
 .cart__btn:hover {
   background-color: transparent;
   border-color: #fafafa;
   color: #fafafa;
+}
+.cart__goods-amount {
+  min-width: 10px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #f16d7f;
+  right: 18px;
+  top: 2px;
+  text-align: center;
+  padding: 5px 8px;
+  color: #fafafa;
+  font-weight: bold;
+  font-size: 14px;
 }
 .cart__drop {
   display: block;
