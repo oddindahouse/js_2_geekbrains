@@ -139,8 +139,6 @@ const app = new Vue({
             });
             this.getJson(`${API + this.cartUrl}`)
                 .then(data => {
-                    this.cartCountGoods = data.countGoods;
-                    this.cartAmount = data.amount;
                     for (let el of data.contents) {
                         this.cartProducts.push(el);
                     }
