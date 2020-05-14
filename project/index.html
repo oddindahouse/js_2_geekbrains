@@ -4,32 +4,68 @@
     <meta charset="UTF-8">
     <title>Интернет-магазин</title>
     <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header>
-    <nav class="navbar">
-        <a class="navbar-brand" href="#">Интернет-магазин</a>
-        <div class="cart">
-            <button class="cart__btn">
-                <i class="fas fa-shopping-cart fa-2x"></i>
-            </button>
-            <div class="cart__drop">
-                <ul class="cart__item-list">
-
-                </ul>
-                <p class="cart__total-price">Текущая сумма покупок:&nbsp<span class="cart__total-price_span">0</span>&nbsp &#x20bd</p>
+<div id="app">
+    <header>
+        <nav class="navbar">
+            <a class="navbar-brand" href="#">Интернет-магазин</a>
+            <div class="navbar__right">
+                <form action="#" class="search__form">
+                    <input type="text" class="search__field"
+                           v-model.trim="searchLine"
+                           @blur="filterGoods"
+                           @keyup.enter="filterGoods">
+                    <button class="btn-search" type="submit">
+                        <i class="fas fa-search" @click="filterGoods"></i>
+                    </button>
+                </form>
+                <div class="cart">
+                    <div class="cart__btn btn" @click="isCartVisible = !isCartVisible" >
+                        <div v-if="cartCountGoods > 0" class="cart__goods-amount">{{cartCountGoods}}</div>
+                        <i class="fas fa-shopping-cart fa-2x"></i>
+                    </div>
+                    <div class="cart__drop" v-show="isCartVisible">
+                        <ul class="cart__item-list">
+                            <li class="cart__item" v-for="cartProduct in cartProducts" :key="cartProduct.id_product">
+                                <!--                            <img :src="imgCart" alt="Some img">-->
+                                <img :src="imgCart" alt="Some img" class="cart__item-img">
+                                <p class="cart__item-title">{{cartProduct.product_name}}</p>
+                                <p class="cart__item-price">{{cartProduct.price}} &#x20bd</p>
+                                <p class="cart__item-quantity">{{cartProduct.quantity}}</p>
+                                <i class="fas fa-times-circle cart__item-delbtn" @click="delItemFromCart(cartProduct)"></i>
+                            </li>
+                        </ul>
+                        <p class="cart__total-price">Текущая&nbspсумма&nbspпокупок:&nbsp{{cartAmount}}&nbsp&#x20bd</p>
+                    </div>
+                </div>
             </div>
+
+
+
+        </nav>
+
+    </header>
+    <main>
+        <div class="products">
+            <div v-show="products.length > 0" class="product-item" v-for="product of filteredProducts" :key="product.id_product">
+                <img :src="imgCatalog" alt="Some img">
+                <div class="desc">
+                    <h3>{{product.product_name}}</h3>
+                    <p>{{product.price}}₽</p>
+                    <button class="buy-btn btn" @click="addItemToCart(product)">Купить</button>
+                </div>
+            </div>
+            <div v-if="products.length === 0">Нет данных</div>
         </div>
+    </main>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/vuewed.js"></script>
 
-    </nav>
-
-</header>
-<main>
-    <div class="products"></div>
-</main>
-<script src="js/main.js"></script>
 </body>
 </html>
