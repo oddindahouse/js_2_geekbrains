@@ -51,7 +51,7 @@ Vue.component('cart', {
                     }
                 }).catch(error => {
                     let regExp = /[^(]*/;
-                    this.$root.$refs.errors.addError(error, String(arguments.callee).match(regExp)[0]);
+                    this.$root.$refs.errors.addError(error, arguments.callee);
             });
         },
         addItemToCart(productItem) {
@@ -90,8 +90,7 @@ Vue.component('cart', {
                         return Promise.reject(new Error('Товар не был удален из корзины'));
                     }
                 }).catch(error => {
-                    let regExp = /[^(]*/;
-                    this.$root.$refs.errors.addError(error, String(arguments.callee).match(regExp)[0]);
+                    this.$root.$refs.errors.addError(error,arguments.callee);
             });
         },
         delItemFromCart(item) {

@@ -6,8 +6,9 @@ Vue.component('error',{
         };
     },
     methods:{
-      addError(error, context = ''){
-          this.errors.push(`${context} : ${error}`);
+      addError(error, fn = ''){
+          let fnName = String(fn).match(/[^(]*/)[0];
+          this.errors.push(`${fnName} : ${error}`);
       }
     },
     computed:{
