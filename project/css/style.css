@@ -123,7 +123,7 @@ a:hover, a:active, a:visited {
   z-index: 3;
   right: 32px;
   width: fit-content;
-  border: 1px solid #000;
+  border: 3px double #ccc;
   border-radius: 10px;
   padding: 8px;
   background-color: #fff;
@@ -179,6 +179,20 @@ a:hover, a:active, a:visited {
   border-bottom-right-radius: 10px;
   padding-bottom: 8px;
   margin: 8px 8px;
+}
+
+.error {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 450px;
+  background-color: #cd8282;
+  font-size: 16px;
+  margin: 24px;
+}
+.error__p {
+  padding: 5px;
 }
 
 .desc {
