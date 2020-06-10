@@ -1,0 +1,16 @@
+{
+  "name": "geek-brains-project-server",
+  "version": "1.0.0",
+  "description": "Server-side for lesson 7 ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "oddindahouse",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.26.0"
+  }
+}
