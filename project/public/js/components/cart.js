@@ -22,7 +22,7 @@ Vue.component('cart', {
     data() {
         return {
             isCartVisible: false,
-            cartUrl: '/getBasket.json',
+            cartUrl: '/cart',
             cartProducts: [],
             imgCart: 'https://placehold.it/60x60',
         };
@@ -31,10 +31,13 @@ Vue.component('cart', {
         cartItem,
     },
     methods: {
-        fetchCartItemAdd(productItem) {
-            fetch(`${API}/addToBasket.json`, {
+        fetchCartItem(reqBody) {
+            return fetch(`${API}/cart`, {
                 method: 'POST',
-                body: productItem
+                body: JSON.stringify(reqBody),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
             })
                 .then(response => {
                     if (!response.ok) {
@@ -45,61 +48,52 @@ Vue.component('cart', {
                     }
                     return response.json();
                 })
-                .then((data) => {
-                    if (data.result !== 1) {
-                        return Promise.reject(new Error('Товар не был добавлен в корзину'));
-                    }
-                }).catch(error => {
-                    let regExp = /[^(]*/;
-                    this.$root.$refs.errors.addError(error, arguments.callee);
-            });
+
         },
+
         addItemToCart(productItem) {
-            //отправляем добавленный товар на сервер
-            this.fetchCartItemAdd(productItem);
-            //работаем с локальной копией товаров
-            let el = this.cartProducts.find(el => el.id_product === productItem.id_product);
-            //console.dir(el);
-            if (el !== undefined) {
-
-                el.quantity++;
-                //console.log(el.quantity);
-            } else {
-                let newCartItem = Object.assign({quantity: 1}, productItem);
-                //console.dir(newCartItem);
-                this.cartProducts.push(newCartItem);
-
-            }
-        },
-        fetchCartItemDel(item) {
-            fetch(`${API}/deleteFromBasket.json`, {
-                method: 'POST',
-                body: item
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        // Сервер вернул код ответа за границами диапазона [200, 299]
-                        return Promise.reject(new Error(
-                            'Response failed: ' + response.status + ' (' + response.statusText + ')'
-                        ));
-                    }
-                    return response.json();
-                })
+            //отправляем ID товара и количество на сервер
+            this.fetchCartItem({"id": productItem.id_product, "quantity": 1})
                 .then((data) => {
                     if (data.result !== 1) {
-                        return Promise.reject(new Error('Товар не был удален из корзины'));
+                        return Promise.reject(new Error('Корзина не была изменена(ошибка сервера)'));
+                    } else {
+                        //работаем с локальной копией товаров
+                        let el = this.cartProducts.find(el => el.id_product === productItem.id_product);
+                        //console.dir(el);
+                        if (el !== undefined) {
+                            el.quantity++;
+                            //console.log(el.quantity);
+                        } else {
+                            //console.dir(newCartItem);
+                            let newCartItem = Object.assign({quantity: 1}, productItem);
+                            this.cartProducts.push(newCartItem);
+
+                        }
                     }
                 }).catch(error => {
-                    this.$root.$refs.errors.addError(error,arguments.callee);
+                this.$root.$refs.errors.addError(error, arguments.callee);
             });
+
+
         },
-        delItemFromCart(item) {
-            this.fetchCartItemDel(item);
-            if (item.quantity > 1) {
-                item.quantity--;
-            } else {
-                this.cartProducts.splice(this.cartProducts.findIndex(el => el === item), 1);
-            }
+
+        delItemFromCart(cartItem) {
+            this.fetchCartItem({"id": cartItem.id_product, "quantity": -1})
+                .then((data) => {
+                    if (data.result !== 1) {
+                        return Promise.reject(new Error('Корзина не была изменена(ошибка сервера)'));
+                    } else {
+                        if (cartItem.quantity > 1) {
+                            cartItem.quantity--;
+                        } else {
+                            this.cartProducts.splice(this.cartProducts.findIndex(el => el === cartItem), 1);
+                        }
+                    }
+                }).catch(error => {
+                this.$root.$refs.errors.addError(error, arguments.callee);
+            });
+
         },
     },
     template: `  <div class="cart">
@@ -110,9 +104,9 @@ Vue.component('cart', {
                     <div class="cart__drop" v-show="isCartVisible">
                         <ul class="cart__item-list">
                             <li is="cart-item" class="cart__item" 
-                            v-for="cartProduct in cartProducts" 
-                            :key="cartProduct.id_product"
-                            :item="cartProduct"
+                            v-for="cartItem in cartProducts" 
+                            :key="cartItem.id_product"
+                            :item="cartItem"
                             :img="imgCart">
                                 
                             </li>
